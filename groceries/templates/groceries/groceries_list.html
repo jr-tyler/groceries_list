@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grocery List</title>
+</head>
+<body>
+<h1><a href="">Flat Grocery List</a></h1>
+
+{% for grocery in groceries %}
+    <div>
+        <h4><a href="">{{ grocery.bought_date }}</a> - {{ grocery.item }} - ${{ grocery.cost }} - <a href="">{{ grocery.person }}</a></h4>
+    </div>
+{% endfor %}
+</body>
+</html>
