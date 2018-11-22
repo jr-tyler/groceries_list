@@ -3,14 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Grocery List</title>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
-<h1><a href="">Flat Grocery List</a></h1>
 
-{% for grocery in groceries %}
-    <div>
-        <h4><a href="">{{ grocery.bought_date }}</a> - {{ grocery.item }} - ${{ grocery.cost }} - <a href="">{{ grocery.person }}</a></h4>
+<div class=""page-header>
+    <h1><a href="">Flat Grocery List</a></h1>
+</div>
+
+<div class="'content container">
+    <div class="'row">
+        <div class="'col-md-8">
+            <table id="tablePreview" class="table table-striped table-hover table-bordered">
+            <!--Table head-->
+                <thead>
+                <tr>
+                    <th>Date Bought</th>
+                    <th>Flattie</th>
+                    <th>Item</th>
+                    <th>Cost</th>
+                    <th>Money Taken from Piggy</th>
+                    <th>Date Piggy $ Taken</th>
+                </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    {% for grocery in groceries %}
+                        <tr>
+                            <td><a href="">{{ grocery.bought_date }}</a></td>
+                            <td><a href="">{{ grocery.person }}</a></td>
+                            <td>{{ grocery.item }}</td>
+                            <td>${{ grocery.cost }}</td>
+                            <td>Button here</td>
+                            <td>Date here</td>
+                        </tr>
+
+                    {% endfor %}
+                </tbody>
+
+        </div>
     </div>
-{% endfor %}
+</div>
 </body>
 </html>
