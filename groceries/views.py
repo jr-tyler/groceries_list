@@ -1,6 +1,8 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
+
 from .models import Grocery
+from groceries.forms import GroceryForm
 
 # Create your views here.
 def grocery_list(request):
@@ -15,4 +17,15 @@ def purchaser_list(request, pk):
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
 
 def groceries_new(request):
-    return render(request, 'groceries/groceries_new.html')
+    if request.method == 'POST':
+        form = GroceryForm(request.POST)
+        if form.is_valid():
+            grocery = form.save(commit=False)
+            grocery.person = request.user
+            grocery.bought_date = timezone.now()
+            grocery.save()
+            return redirect('/', pk=grocery.pk)
+    else:
+        form = GroceryForm()
+        stuff_for_front_end ={'form': form}
+        return render(request, 'groceries/groceries_new.html', stuff_for_front_end)
