@@ -29,3 +29,9 @@ def groceries_new(request):
         form = GroceryForm()
         stuff_for_front_end ={'form': form}
         return render(request, 'groceries/groceries_new.html', stuff_for_front_end)
+
+
+def piggy_page(request):
+    groceries = Grocery.objects.filter(person=request.user).order_by('-bought_date')
+    stuff_for_front_end = {'groceries': groceries}
+    return render(request, 'groceries/piggy_page.html', stuff_for_front_end)

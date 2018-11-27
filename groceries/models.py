@@ -11,6 +11,7 @@ class Grocery(models.Model):
     bought_date = models.DateField(default=timezone.now)
     paid_date = models.DateField(blank=True, null=True)
 
+    # a function to create the paid date --> to be run when the button is pressed
     def paid(self):
         self.paid_date = timezone.now()
         self.save()

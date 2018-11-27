@@ -14,7 +14,9 @@
 
 <div class="page-header">
     {% if user.is_authenticated %}
+        <a href="{% url 'piggy_page' %}" class="top-menu"><i class="fas fa-piggy-bank fa-2x"></i></a>
         <a href="{% url 'groceries_new' %}" class="top-menu"><i class="fas fa-spray-can fa-2x"></i></a>
+        <h1 class="top-menu">Hey there {{ user.username }}  </h1>
     {% endif %}
     <h1><a href="{% url 'grocery_list' %}">Flat Grocery List</a></h1>
 </div>

@@ -7,4 +7,7 @@ urlpatterns = [
 
     # 127.0.0.80000/groceries/new --> local
     path('groceries/new/', views.groceries_new, name='groceries_new'),
+
+    # 127.0.0.80000/groceries/piggy --> local
+    path('groceries/piggy/', views.piggy_page, name='piggy_page'),
 ]
