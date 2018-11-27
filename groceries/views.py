@@ -13,3 +13,6 @@ def purchaser_list(request, pk):
     purchaser = get_object_or_404(Grocery, pk=pk)
     stuff_for_front_end = {'purchaser': purchaser}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
+
+def groceries_new(request):
+    return render(request, 'groceries/groceries_new.html')
