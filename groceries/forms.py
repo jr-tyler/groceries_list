@@ -5,3 +5,4 @@ class GroceryForm(forms.ModelForm):
     class Meta:
         model = Grocery
         fields = (  'item', 'cost')
+

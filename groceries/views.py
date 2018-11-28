@@ -10,10 +10,9 @@ def grocery_list(request):
     stuff_for_front_end = {'groceries': groceries}
     return render(request, 'groceries/groceries_list.html', stuff_for_front_end)
 
-def purchaser_list(request, pk):
-
-    purchaser = get_object_or_404(Grocery, pk=pk)
-    stuff_for_front_end = {'purchaser': purchaser}
+def purchaser_list(request):
+    groceries = Grocery.objects.filter(person=request.user).order_by('-bought_date')
+    stuff_for_front_end = {'groceries': groceries}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
 
 def groceries_new(request):
@@ -32,6 +31,7 @@ def groceries_new(request):
 
 
 def piggy_page(request):
-    groceries = Grocery.objects.filter(person=request.user).order_by('-bought_date')
+    # filter objects based on the user and if they have been paid from piggy
+    groceries = Grocery.objects.filter(person=request.user).filter(paid_date__isnull=True).order_by('-bought_date')
     stuff_for_front_end = {'groceries': groceries}
     return render(request, 'groceries/piggy_page.html', stuff_for_front_end)

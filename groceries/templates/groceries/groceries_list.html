@@ -20,7 +20,7 @@
 
                 <tr>
                     <td><a href="">{{ grocery.bought_date }}</a></td>
-                    <td><a href="">{{ grocery.person }}</a></td>
+                    <td><a href="{% url 'purchaser_list' %}">{{ grocery.person }}</a></td>
                     <td>{{ grocery.item }}</td>
                     <td>${{ grocery.cost }}</td>
                     <td>To be added</td>
