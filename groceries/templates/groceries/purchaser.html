@@ -1,6 +1,7 @@
 {% extends 'groceries/base.html' %}
 
 {% block content %}
+    <p></p>
     <table id="tablePreview" class="table table-striped table-hover table-bordered">
     <!--Table head-->
         <thead>
@@ -9,8 +10,8 @@
             <th>Flattie</th>
             <th>Item</th>
             <th>Cost</th>
-            <th>$$$ Taken from Piggy</th>
-            <th>Date Piggy $$$ Taken</th>
+            <th>Taken $$$ from Piggy</th>
+            <th>Date $$$ taken from Piggy</th>
         </tr>
         </thead>
         <!--Table head-->
@@ -24,7 +25,7 @@
                     <td>{{ grocery.item }}</td>
                     <td>${{ grocery.cost }}</td>
                     <td>Button here</td>
-                    <td>Date here</td>
+                    <td>{{ grocery.paid_date }}</td>
                 </tr>
 
             {% endfor %}

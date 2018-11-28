@@ -5,11 +5,16 @@ from .models import Grocery
 from groceries.forms import GroceryForm
 
 # Create your views here.
+# shows list of all groceries bought by everyone where the piggy money has not been claimed
 def grocery_list(request):
-    groceries = Grocery.objects.filter(bought_date__lte=timezone.now()).order_by('-bought_date')
-    stuff_for_front_end = {'groceries': groceries}
+    groceries = Grocery.objects.filter(bought_date__lte=timezone.now()).filter(paid_date__isnull=True).order_by('-bought_date')
+    total = 0
+    for grocery in groceries:
+        total += grocery.cost
+    stuff_for_front_end = {'groceries': groceries, 'total': total}
     return render(request, 'groceries/groceries_list.html', stuff_for_front_end)
 
+# shows a list of all groceries bought by a person
 def purchaser_list(request):
     groceries = Grocery.objects.filter(person=request.user).order_by('-bought_date')
     stuff_for_front_end = {'groceries': groceries}
