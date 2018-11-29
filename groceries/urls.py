@@ -12,5 +12,5 @@ urlpatterns = [
     path('groceries/piggy/', views.piggy_page, name='piggy_page'),
 
     # 127.0.0.80000/groceries/purchaser -->
-    path('groceries/purchaser', views.purchaser_list, name='purchaser_list')
+    path('groceries/<int:person_id>/', views.purchaser_list, name='purchaser_list')
 ]
