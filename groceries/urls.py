@@ -14,6 +14,10 @@ urlpatterns = [
     # 127.0.0.80000/groceries/<int> --> local
     path('groceries/<int:person_id>/', views.purchaser_list, name='purchaser_list'),
 
-# 127.0.0.80000/groceries/purchaser --> local
-    path('groceries/purchaser/', views.user_purchaser_list, name='user_purchaser_list')
+    # 127.0.0.80000/groceries/purchaser --> local
+    path('groceries/purchaser/', views.user_purchaser_list, name='user_purchaser_list'),
+
+    # 127.0.0.80000/groceries/bought_list -->
+    path('groceries/<bought_date>/bought_list/', views.bought_date_list, name='bought_date_list'),
+
 ]

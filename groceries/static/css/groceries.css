@@ -37,7 +37,11 @@ h4 {
 
 button {
     font-family: 'Indie Flower', cursive;
+}
+
+.btn btn-danger {
     font-weight: 700;
+    margin-bottom: 40px;
 }
 
 form {

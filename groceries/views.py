@@ -49,3 +49,8 @@ def piggy_page(request):
         total += grocery.cost
     stuff_for_front_end = {'groceries': groceries, 'total': total}
     return render(request, 'groceries/piggy_page.html', stuff_for_front_end)
+
+def bought_date_list(request, bought_date):
+    groceries = Grocery.objects.filter(bought_date=bought_date).order_by('-bought_date')
+    stuff_for_front_end ={'groceries': groceries}
+    return render(request, 'groceries/bought_date_list.html', stuff_for_front_end)
