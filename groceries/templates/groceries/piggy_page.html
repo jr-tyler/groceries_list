@@ -24,7 +24,7 @@
 
                 <tr>
                     <td><a href="">{{ grocery.bought_date }}</a></td>
-                    <td><a href="/">{{ grocery.person }}</a></td>
+                    <td><a href="{% url 'purchaser_list' person_id=grocery.person_id %}">{{ grocery.person }}</a></td>
                     <td>{{ grocery.item }}</td>
                     <td>${{ grocery.cost }}</td>
                     <td>To be added</td>
@@ -35,7 +35,14 @@
         </tbody>
     </table>
     <p></p>
-    <button type="submit" class="btn btn-danger" style="float:right">Save</button>
+    <div>
+        <h2 style="float:right"><u>Total owed: ${{ total }}</u></h2>
+    </div>
     <p></p>
-    <h3>Take some money out to pay for your groceries?</h3>
+    <div>
+        <h3>Take some money out to pay for your groceries?</h3>
+        <p></p>
+        <button type="submit" class="btn btn-danger" style="float:right">Save</button>
+    </div>
+
 {% endblock %}

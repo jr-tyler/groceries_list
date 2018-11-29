@@ -14,9 +14,15 @@ def grocery_list(request):
     stuff_for_front_end = {'groceries': groceries, 'total': total}
     return render(request, 'groceries/groceries_list.html', stuff_for_front_end)
 
-# shows a list of all groceries bought by a person
+# shows a list of all groceries bought by a person when clicked in the table
 def purchaser_list(request, person_id):
     groceries = Grocery.objects.filter(person_id=person_id).order_by('-bought_date')
+    stuff_for_front_end = {'groceries': groceries}
+    return render(request, 'groceries/purchaser.html', stuff_for_front_end)
+
+# shows a list of all groceries bought by a person when their username is clicked
+def user_purchaser_list(request):
+    groceries = Grocery.objects.filter(person=request.user).order_by('-bought_date')
     stuff_for_front_end = {'groceries': groceries}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
 
@@ -38,5 +44,8 @@ def groceries_new(request):
 def piggy_page(request):
     # filter objects based on the user and if they have been paid from piggy
     groceries = Grocery.objects.filter(person=request.user).filter(paid_date__isnull=True).order_by('-bought_date')
-    stuff_for_front_end = {'groceries': groceries}
+    total = 0
+    for grocery in groceries:
+        total += grocery.cost
+    stuff_for_front_end = {'groceries': groceries, 'total': total}
     return render(request, 'groceries/piggy_page.html', stuff_for_front_end)
