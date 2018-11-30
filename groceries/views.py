@@ -71,18 +71,23 @@ def bought_date_list(request, bought_date):
 @ login_required
 def edit_item(request, pk):
     grocery = get_object_or_404(Grocery, pk=pk)
-    if request.method == 'POST' and grocery.person == request.user and grocery.paid_date == None:
+    if grocery.person == request.user:
+        if request.method == 'POST':
 
-        # updating an existing form
-        form = GroceryForm(request.POST, instance=grocery)
-        if form.is_valid():
-            grocery = form.save(commit=False)
-            grocery.author = request.user
-            grocery.save()
-            return redirect('grocery_list')
+            # updating an existing form
+            form = GroceryForm(request.POST, instance=grocery)
+            if form.is_valid():
+                grocery = form.save(commit=False)
+                grocery.save()
+                return redirect('grocery_list')
+
+        else:
+            form = GroceryForm(instance=grocery)
+            stuff_for_frontend = {'form': form, 'grocery': grocery}
+        return render(request, 'groceries/edit_item.html', stuff_for_frontend)
 
     else:
-        form = GroceryForm(instance=grocery)
-        stuff_for_frontend = {'form': form, 'grocery': grocery}
-    return render(request, 'groceries/edit_item.html', stuff_for_frontend)
+        message = "Oops!  It doesn't look like you bought this one!"
+        stuff_for_frontend = {'message': message}
+        return render(request, 'groceries/edit_item.html', stuff_for_frontend)
 

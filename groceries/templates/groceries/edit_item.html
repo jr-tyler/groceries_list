@@ -3,10 +3,19 @@
 {% block title %}{{ grocery.item }}{% endblock %}
 
 {% block content %}
-    <h1>Edit Item</h1>
-    <form method="post" class="form">
-        {% csrf_token %}
-        {{ form.as_p }}
-     <button type="submit" class="btn btn-danger">Save</button>
-    </form>
+
+    {% if form %}
+        <p></p>
+        <h1>Edit Item</h1>
+        <p></p>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+         <button type="submit" class="btn btn-danger">Save</button>
+        </form>
+
+    {% else %}
+        <p></p>
+        <h1> {{ message }}</h1>
+    {% endif %}
 {% endblock %}
