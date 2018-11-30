@@ -42,6 +42,8 @@ def groceries_new(request):
             grocery = form.save(commit=False)
             grocery.person = request.user
             grocery.bought_date = timezone.now()
+            if grocery.cost == 0.00:
+                grocery.paid_date = timezone.now()
             grocery.save()
             return redirect('/', pk=grocery.pk)
     else:
@@ -63,7 +65,7 @@ def piggy_page(request):
 # shows a list of all of the groceries bought on a specific date
 @ login_required
 def bought_date_list(request, bought_date):
-    groceries = Grocery.objects.filter(bought_date=bought_date).order_by('-bought_date')
+    groceries = Grocery.objects.filter(bought_date=bought_date).order_by('person')
     stuff_for_front_end ={'groceries': groceries}
     return render(request, 'groceries/bought_date_list.html', stuff_for_front_end)
 
@@ -78,6 +80,8 @@ def edit_item(request, pk):
             form = GroceryForm(request.POST, instance=grocery)
             if form.is_valid():
                 grocery = form.save(commit=False)
+                if grocery.cost == 0.00:
+                    grocery.paid_date = timezone.now()
                 grocery.save()
                 return redirect('grocery_list')
 
@@ -91,3 +95,9 @@ def edit_item(request, pk):
         stuff_for_frontend = {'message': message}
         return render(request, 'groceries/edit_item.html', stuff_for_frontend)
 
+# allows a user to delete an item
+@login_required
+def delete_item(request, pk):
+    grocery = get_object_or_404(Grocery, pk=pk)
+    grocery.delete()
+    return redirect('/', pk=grocery.pk)
