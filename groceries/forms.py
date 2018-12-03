@@ -6,3 +6,4 @@ class GroceryForm(forms.ModelForm):
         model = Grocery
         fields = (  'item', 'cost')
 
+
