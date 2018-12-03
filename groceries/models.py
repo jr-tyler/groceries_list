@@ -19,3 +19,7 @@ class Grocery(models.Model):
     # instead of displaying the objects as numbers it returns the item label as the descriptor
     def __str__(self):
         return self.item + ' bought by ' + str(self.person)
+
+class PiggyPaid(models.Model):
+    item = models.ForeignKey('groceries.Grocery', on_delete=models.CASCADE, related_name='piggy_paid')
+    paid_date = models.DateField(default=timezone.now)
