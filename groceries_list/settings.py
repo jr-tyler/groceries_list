@@ -29,6 +29,9 @@ ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = 'groceries_list'
 
+LOGOUT_REDIRECT_URL = '/'
+
+
 # Application definition
 
 INSTALLED_APPS = [

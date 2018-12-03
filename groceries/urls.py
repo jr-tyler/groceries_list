@@ -1,6 +1,5 @@
 from django.urls import path, include
 from . import views
-from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -27,8 +26,5 @@ urlpatterns = [
 
     # 127.0.0.80000/groceries/<int:pk>/delete_grocery/ --> local
     path('groceries/<int:pk>/delete', views.delete_item, name='delete_item'),
-
-    # 127.0.0.8000/accounts/login/ --> local
-    path('accounts/', include('django.contrib.auth.urls'), name='login'),
 
 ]

@@ -1,8 +1,10 @@
 {% extends 'groceries/base.html' %}
 
+{% block title %}{{ person }}{% endblock %}
+
 {% block content %}
     <p></p>
-    <h1>Here is a list of all the groceries bought by one person!</h1>
+    <h1>Here is a list of all the groceries bought by {{ person}}!</h1>
     <p></p>
     <table id="tablePreview" class="table table-striped table-hover table-bordered">
     <!--Table head-->

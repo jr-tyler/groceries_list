@@ -23,14 +23,16 @@ def grocery_list(request):
 @ login_required
 def purchaser_list(request, person_id):
     groceries = Grocery.objects.filter(person_id=person_id).order_by('-bought_date')
-    stuff_for_front_end = {'groceries': groceries}
+    person = groceries[0].person
+    stuff_for_front_end = {'groceries': groceries, 'person': person}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
 
 # shows a list of all groceries bought by a person when their username is clicked
 @ login_required
 def user_purchaser_list(request):
     groceries = Grocery.objects.filter(person=request.user).order_by('-bought_date')
-    stuff_for_front_end = {'groceries': groceries}
+    person = 'YOU'
+    stuff_for_front_end = {'groceries': groceries, 'person': person}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
 
 # allows the user to add more groceries
@@ -66,13 +68,14 @@ def piggy_page(request):
 @ login_required
 def bought_date_list(request, bought_date):
     groceries = Grocery.objects.filter(bought_date=bought_date).order_by('person')
-    stuff_for_front_end ={'groceries': groceries}
+    stuff_for_front_end ={'groceries': groceries, 'bought_date': bought_date}
     return render(request, 'groceries/bought_date_list.html', stuff_for_front_end)
 
 # allows the user to edit an item that they bought
 @ login_required
 def edit_item(request, pk):
     grocery = get_object_or_404(Grocery, pk=pk)
+    item = grocery.item
     if grocery.person == request.user:
         if request.method == 'POST':
 
@@ -91,8 +94,8 @@ def edit_item(request, pk):
         return render(request, 'groceries/edit_item.html', stuff_for_frontend)
 
     else:
-        message = "Oops!  It doesn't look like you bought this one!"
-        stuff_for_frontend = {'message': message}
+        message = "Oops!  It doesn't look like you bought " + item.upper() + "..."
+        stuff_for_frontend = {'message': message, 'grocery': grocery}
         return render(request, 'groceries/edit_item.html', stuff_for_frontend)
 
 # allows a user to delete an item
