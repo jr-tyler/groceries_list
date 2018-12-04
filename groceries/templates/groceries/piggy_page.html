@@ -20,7 +20,7 @@
             <th>Flattie</th>
             <th>Item</th>
             <th>Cost</th>
-            <th>Taken $$$ from Piggy</th>
+            <th>Take $$$ from Piggy</th>
         </tr>
         </thead>
         <!--Table head-->
@@ -33,7 +33,7 @@
                     <td><a href="{% url 'purchaser_list' person_id=grocery.person_id %}">{{ grocery.person }}</a></td>
                     <td><a href="{% url 'edit_item' pk=grocery.pk %}">{{ grocery.item }}</a></td>
                     <td>${{ grocery.cost }}</td>
-                    <td>To be added</td>
+                    <td class="action-checkbox"><input type="checkbox" id="check_paid" value="grocery.pk"></td>
                 </tr>
 
             {% endfor %}

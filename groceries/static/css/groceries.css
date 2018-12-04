@@ -48,3 +48,7 @@ form {
     font-family: 'Indie Flower', cursive;
     font-weight: 700;
 }
+
+input[type=checkbox] {
+    transform: scale(1.5);
+}

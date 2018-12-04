@@ -57,6 +57,7 @@ def groceries_new(request):
         stuff_for_front_end ={'form': form}
         return render(request, 'groceries/groceries_new.html', stuff_for_front_end)
 
+
 # shows the user what groceries they haven't yet taken money from the piggy bank for
 @ login_required
 def piggy_page(request):
@@ -68,6 +69,7 @@ def piggy_page(request):
     stuff_for_front_end = {'groceries': groceries, 'total': total}
     return render(request, 'groceries/piggy_page.html', stuff_for_front_end)
 
+
 @ login_required
 def piggy_top_up(request):
     if request.method == 'POST':
@@ -77,7 +79,7 @@ def piggy_top_up(request):
             piggytopup = form.save(commit=False)
             piggytopup.person = request.user
             piggytopup.save()
-            return redirect('piggy_page')
+            return redirect('piggy_top_up_list')
 
     else:
         form = PiggyForm()
@@ -101,6 +103,7 @@ def bought_date_list(request, bought_date):
     groceries = Grocery.objects.filter(bought_date=bought_date).order_by('person')
     stuff_for_front_end ={'groceries': groceries, 'bought_date': bought_date}
     return render(request, 'groceries/bought_date_list.html', stuff_for_front_end)
+
 
 # allows the user to edit an item that they bought
 @ login_required
@@ -135,3 +138,7 @@ def delete_item(request, pk):
     grocery = get_object_or_404(Grocery, pk=pk)
     grocery.delete()
     return redirect('/', pk=grocery.pk)
+
+
+# @login_required
+# def grocery_paid(request, )
