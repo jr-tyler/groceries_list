@@ -4,10 +4,11 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
 
-from .models import Grocery
-from groceries.forms import GroceryForm
+from .models import Grocery, PiggyPaid, PiggyTopUp
+from groceries.forms import GroceryForm, PiggyForm
 
 # Create your views here.
+
 
 # shows list of all groceries bought by everyone where the piggy money has not been claimed
 @ login_required
@@ -19,6 +20,7 @@ def grocery_list(request):
     stuff_for_front_end = {'groceries': groceries, 'total': total}
     return render(request, 'groceries/groceries_list.html', stuff_for_front_end)
 
+
 # shows a list of all groceries bought by a person when clicked in the table
 @ login_required
 def purchaser_list(request, person_id):
@@ -27,6 +29,7 @@ def purchaser_list(request, person_id):
     stuff_for_front_end = {'groceries': groceries, 'person': person}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
 
+
 # shows a list of all groceries bought by a person when their username is clicked
 @ login_required
 def user_purchaser_list(request):
@@ -34,6 +37,7 @@ def user_purchaser_list(request):
     person = 'YOU'
     stuff_for_front_end = {'groceries': groceries, 'person': person}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
+
 
 # allows the user to add more groceries
 @ login_required
@@ -63,6 +67,33 @@ def piggy_page(request):
         total += grocery.cost
     stuff_for_front_end = {'groceries': groceries, 'total': total}
     return render(request, 'groceries/piggy_page.html', stuff_for_front_end)
+
+@ login_required
+def piggy_top_up(request):
+    if request.method == 'POST':
+        # updating an existing form
+        form = PiggyForm(request.POST)
+        if form.is_valid():
+            piggytopup = form.save(commit=False)
+            piggytopup.person = request.user
+            piggytopup.save()
+            return redirect('piggy_page')
+
+    else:
+        form = PiggyForm()
+        stuff_for_front_end = {'form': form}
+        return render(request, 'groceries/piggy_top_up.html', stuff_for_front_end)
+
+
+@login_required
+def piggy_top_up_list(request):
+    piggy_top_ups = PiggyTopUp.objects.all().order_by('-added_date')
+    piggy_total = 0
+    for piggy_top_up in piggy_top_ups:
+        piggy_total += piggy_top_up.amount
+    stuff_for_front_end = {'piggy_top_ups': piggy_top_ups, 'piggy_total': piggy_total}
+    return render(request, 'groceries/piggy_top_up_list.html', stuff_for_front_end)
+
 
 # shows a list of all of the groceries bought on a specific date
 @ login_required

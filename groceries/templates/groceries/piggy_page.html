@@ -5,10 +5,13 @@
 {% block content %}
     <p></p>
     <div>
-        <h3>Would you like to add money to the piggy bank?</h3>
+        <a href="{% url 'piggy_top_up' %}"><h3>Would you like to add money to the piggy bank?</h3></a>
+        <p></p>
     </div>
+
+
     <h3>Here is a list of all <strong><u>your</u></strong> groceries not yet claimed from the piggy bank</h3>
-    <p></p>
+
     <table id="tablePreview" class="table table-striped table-hover table-bordered">
     <!--Table head-->
         <thead>

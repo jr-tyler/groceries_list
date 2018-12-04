@@ -1,0 +1,41 @@
+{% extends 'groceries/base.html' %}
+
+{% block title %}Piggy List{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <p></p>
+        <h1>Who has paid into the piggy bank?</h1>
+        <p></p>
+        <table id="tablePreview" class="table table-striped table-hover table-bordered">
+        <!--Table head-->
+            <thead>
+            <tr>
+                <th>Date Paid</th>
+                <th>Flattie</th>
+                <th>Reason</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <!--Table head-->
+            <!--Table body-->
+            <tbody>
+                {% for piggy_top_up in piggy_top_ups %}
+
+                    <tr>
+                        <td>{{ piggy_top_up.added_date }}</td>
+                        <td>{{ piggy_top_up.person }}</td>
+                        <td>{{ piggy_top_up.reason }}</td>
+                        <td>${{ piggy_top_up.amount }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <!--Table body-->
+        </table>
+        <p></p>
+        <div>
+            <h2 style="float:right"><u>Total: ${{ piggy_total }}</u></h2>
+        </div>
+    {% endif %}
+
+{% endblock %}
