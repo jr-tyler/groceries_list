@@ -30,7 +30,12 @@ urlpatterns = [
     # 127.0.0.80000/groceries/piggy_top_up/ -->
     path('groceries/piggy_top_up/', views.piggy_top_up, name='piggy_top_up'),
 
-    #127.0.0.80000/groceries/Piggy_top_up_list/ --> local
+    # 127.0.0.80000/groceries/Piggy_top_up_list/ --> local
     path('groceries/piggy_top_up_list/', views.piggy_top_up_list, name='piggy_top_up_list'),
 
+    # 127.0.0.80000/groceries/<int:pk>/edit_item/ --> local
+    path('groceries/<int:pk>/edit_reason', views.edit_reason, name='edit_reason'),
+
+    # 127.0.0.80000/groceries/<int:pk>/delete_reason/ --> local
+    path('groceries/<int:pk>/delete_reason', views.delete_reason, name='delete_reason'),
 ]

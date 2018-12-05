@@ -1,0 +1,23 @@
+{% extends 'groceries/base.html' %}
+
+{% block title %}Change top up{% endblock %}
+
+{% block content %}
+
+{% if form %}
+        <p></p>
+        <h1>Edit Reason</h1>
+        <p></p>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+         <button type="submit" class="btn btn-danger">Save</button>
+        <a href="{% url 'delete_reason' pk=piggy_top_up.pk %}" class="btn btn-primary"
+           onclick="return confirm('Are you sure that you want to delete this top up?')"><i class="fas fa-trash-alt"></i></a>
+        </form>
+
+    {% else %}
+        <p></p>
+        <h1> {{ message }}</h1>
+    {% endif %}
+{% endblock %}

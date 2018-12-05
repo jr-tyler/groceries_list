@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ piggy_top_up.added_date }}</td>
                     <td>{{ piggy_top_up.person }}</td>
-                    <td>{{ piggy_top_up.reason }}</td>
+                    <td><a href="{% url 'edit_reason' piggy_top_up.pk %}">{{ piggy_top_up.reason }}</a></td>
                     <td>${{ piggy_top_up.amount }}</td>
                 </tr>
             {% endfor %}

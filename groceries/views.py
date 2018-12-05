@@ -148,5 +148,34 @@ def delete_item(request, pk):
     return redirect('/', pk=grocery.pk)
 
 
-# @login_required
-# def grocery_paid(request, )
+# allows the user to edit an item that they bought
+@ login_required
+def edit_reason(request, pk):
+    piggy_top_up = get_object_or_404(PiggyTopUp, pk=pk)
+    reason = piggy_top_up.reason
+    if piggy_top_up.person == request.user:
+        if request.method == 'POST':
+
+            # updating an existing form
+            form = PiggyForm(request.POST, instance=piggy_top_up)
+            if form.is_valid():
+                piggy_top_up = form.save(commit=False)
+                piggy_top_up.save()
+                return redirect('piggy_top_up_list')
+
+        else:
+            form = PiggyForm(instance=piggy_top_up)
+            stuff_for_frontend = {'form': form, 'piggy_top_up': piggy_top_up}
+        return render(request, 'groceries/edit_reason.html', stuff_for_frontend)
+
+    else:
+        message = "Whoa there amigo/amiga   !  It doesn't look like you added this one to the piggy bank..."
+        stuff_for_frontend = {'message': message}
+        return render(request, 'groceries/edit_reason.html', stuff_for_frontend)
+
+# allows a user to delete an item
+@login_required
+def delete_reason(request, pk):
+    piggy_top_up = get_object_or_404(PiggyTopUp, pk=pk)
+    piggy_top_up.delete()
+    return redirect('/groceries/piggy_top_up_list', pk=piggy_top_up.pk)
