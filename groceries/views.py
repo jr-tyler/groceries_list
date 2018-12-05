@@ -26,7 +26,11 @@ def grocery_list(request):
 def purchaser_list(request, person_id):
     groceries = Grocery.objects.filter(person_id=person_id).order_by('-bought_date')
     person = groceries[0].person
-    stuff_for_front_end = {'groceries': groceries, 'person': person}
+    outstanding_groceries = Grocery.objects.filter(person=person).filter(paid_date__isnull=True).order_by('-bought_date')
+    total = 0
+    for grocery in outstanding_groceries:
+        total += grocery.cost
+    stuff_for_front_end = {'groceries': groceries, 'person': person, 'total': total}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
 
 
@@ -34,8 +38,12 @@ def purchaser_list(request, person_id):
 @ login_required
 def user_purchaser_list(request):
     groceries = Grocery.objects.filter(person=request.user).order_by('-bought_date')
-    person = 'YOU'
-    stuff_for_front_end = {'groceries': groceries, 'person': person}
+    person = 'you'
+    outstanding_groceries = Grocery.objects.filter(person=request.user).filter(paid_date__isnull=True).order_by('-bought_date')
+    total = 0
+    for grocery in outstanding_groceries:
+        total += grocery.cost
+    stuff_for_front_end = {'groceries': groceries, 'person': person, 'total': total}
     return render(request, 'groceries/purchaser.html', stuff_for_front_end)
 
 
