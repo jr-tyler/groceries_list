@@ -3,7 +3,7 @@
 {% block title %}Piggy Bank{% endblock %}
 
 {% block content %}
-    <p></p>
+<p xmlns="http://www.w3.org/1999/html"></p>
     <div>
         <a href="{% url 'piggy_top_up' %}"><h3>Would you like to add money to the piggy bank?</h3></a>
         <p></p>
@@ -20,11 +20,12 @@
             <th>Flattie</th>
             <th>Item</th>
             <th>Cost</th>
-            <th>Take $$$ from Piggy</th>
+            <th>Claim $$$ from Piggy</th>
         </tr>
         </thead>
         <!--Table head-->
         <!--Table body-->
+
         <tbody>
             {% for grocery in groceries %}
 
@@ -33,7 +34,8 @@
                     <td><a href="{% url 'purchaser_list' person_id=grocery.person_id %}">{{ grocery.person }}</a></td>
                     <td><a href="{% url 'edit_item' pk=grocery.pk %}">{{ grocery.item }}</a></td>
                     <td>${{ grocery.cost }}</td>
-                    <td class="action-checkbox"><input type="checkbox" id="check_paid" value="grocery.pk"></td>
+                    <td><a href="{% url 'item_claim' grocery.pk %}">
+                <button type="submit" class="btn btn-danger" style="float:right" >Claim</button></a></td>
                 </tr>
 
             {% endfor %}
@@ -43,12 +45,6 @@
     <p></p>
     <div>
         <h2 style="float:right"><u>Total owed: ${{ total }}</u></h2>
-    </div>
-    <p></p>
-    <div>
-        <h3>Take some money out to pay for your groceries?</h3>
-        <p></p>
-        <button type="submit" class="btn btn-danger" style="float:right">Save</button>
     </div>
 
 {% endblock %}

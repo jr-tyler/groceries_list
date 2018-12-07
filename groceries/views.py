@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
 
-from .models import Grocery, PiggyPaid, PiggyTopUp
+from .models import Grocery, PiggyTopUp
 from groceries.forms import GroceryForm, PiggyForm
 
 # Create your views here.
@@ -24,7 +24,7 @@ def grocery_list(request):
 # shows a list of all groceries bought by a person when clicked in the table
 @ login_required
 def purchaser_list(request, person_id):
-    groceries = Grocery.objects.filter(person_id=person_id).order_by('-bought_date')
+    groceries = Grocery.objects.filter(person_id=person_id).order_by('-paid_date')
     person = groceries[0].person
     outstanding_groceries = Grocery.objects.filter(person=person).filter(paid_date__isnull=True).order_by('-bought_date')
     total = 0
@@ -71,10 +71,11 @@ def groceries_new(request):
 def piggy_page(request):
     # filter objects based on the user and if they have been paid from piggy
     groceries = Grocery.objects.filter(person=request.user).filter(paid_date__isnull=True).order_by('-bought_date')
+    length_list = len(groceries)
     total = 0
     for grocery in groceries:
         total += grocery.cost
-    stuff_for_front_end = {'groceries': groceries, 'total': total}
+    stuff_for_front_end = {'groceries': groceries, 'total': total, 'length_list': length_list}
     return render(request, 'groceries/piggy_page.html', stuff_for_front_end)
 
 
@@ -179,3 +180,9 @@ def delete_reason(request, pk):
     piggy_top_up = get_object_or_404(PiggyTopUp, pk=pk)
     piggy_top_up.delete()
     return redirect('/groceries/piggy_top_up_list', pk=piggy_top_up.pk)
+
+@login_required
+def item_claim(request, pk):
+    grocery = get_object_or_404(Grocery, pk=pk)
+    grocery.paid()
+    return redirect('piggy_page')

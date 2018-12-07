@@ -38,4 +38,7 @@ urlpatterns = [
 
     # 127.0.0.80000/groceries/<int:pk>/delete_reason/ --> local
     path('groceries/<int:pk>/delete_reason', views.delete_reason, name='delete_reason'),
+
+    # 127.0.0.80000/groceries/item_paid/ --> local
+    path('groceries/<int:pk>/item_claim/', views.item_claim, name='item_claim'),
 ]
