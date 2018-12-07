@@ -1,0 +1,40 @@
+{% extends 'groceries/base.html' %}
+
+{% block title %}All groceries{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <p></p>
+        <h1>Here is everything bought by everyone!  EVER!!!</h1>
+        <p></p>
+        <table id="tablePreview" class="table table-striped table-hover table-bordered">
+        <!--Table head-->
+            <thead>
+            <tr>
+                <th>Date Bought</th>
+                <th>Flattie</th>
+                <th>Item</th>
+                <th>Cost</th>
+                <th>Date $$$ taken from piggy</th>
+            </tr>
+            </thead>
+            <!--Table head-->
+            <!--Table body-->
+            <tbody>
+                {% for grocery in groceries %}
+
+                    <tr>
+                        <td><a href="{% url 'bought_date_list' bought_date=grocery.bought_date %}">{{ grocery.bought_date }}</a></td>
+                        <td><a href="{% url 'purchaser_list' person_id=grocery.person_id %}">{{ grocery.person }}</a></td>
+                        <td><a href="{% url 'edit_item' pk=grocery.pk %}">{{ grocery.item }}</a></td>
+                        <td>${{ grocery.cost }}</td>
+                        <td>{{ grocery.paid_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <!--Table body-->
+        </table>
+    {% endif %}
+
+{% endblock %}

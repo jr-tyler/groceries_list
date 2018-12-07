@@ -21,6 +21,14 @@ def grocery_list(request):
     return render(request, 'groceries/groceries_list.html', stuff_for_front_end)
 
 
+# shows list of all groceries bought by everyone, ever
+@ login_required
+def groceries_complete_list(request):
+    groceries = Grocery.objects.all().order_by('-bought_date')
+    stuff_for_front_end = {'groceries': groceries}
+    return render(request, 'groceries/groceries_complete_list.html', stuff_for_front_end)
+
+
 # shows a list of all groceries bought by a person when clicked in the table
 @ login_required
 def purchaser_list(request, person_id):
