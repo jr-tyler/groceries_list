@@ -131,7 +131,7 @@ os.makedirs(STATIC_ROOT, exist_ok=True)
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'groceries-list/static'), # added "blog/"
+    os.path.join(BASE_DIR, 'groceries_list/static'), # added "blog/"
 )
 
 # Simplified static file serving.
