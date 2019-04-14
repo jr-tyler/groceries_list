@@ -1,1 +1,1 @@
-web: python manage.py collectstatic --noinput; gunicorn mysite.wsgi --preload --workers 1
+web: python manage.py collectstatic --noinput; gunicorn groceries_list.wsgi --preload --workers 1
